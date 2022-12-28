@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,12 +10,21 @@ namespace ArduinoLibrary.Objects
 {
     public class Pin
     {
-        public string PinName { get; set; }
-        public double State { get; set; }
+        public Mode pinMode { get; set; }
+        public Type pinType { get; set; }
+        public int pinNumber { get; set; }
+        public double pinValue { get; set; }
 
-        public void SetState(double state)
+        public enum Mode
         {
-            State = state;  
+            Input,
+            Output
+        }
+        public enum Type
+        {
+            Digital,
+            Analogue,
+            Virtual
         }
     }
 }

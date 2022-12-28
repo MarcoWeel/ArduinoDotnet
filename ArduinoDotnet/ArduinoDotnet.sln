@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32901.215
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArduinoDotnet", "ArduinoDotnet\ArduinoDotnet.csproj", "{2E7C3550-CFD1-4F84-8AD7-4F6CC2A00CDB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArduinoDotnet", "ArduinoDotnet\ArduinoDotnet.csproj", "{2E7C3550-CFD1-4F84-8AD7-4F6CC2A00CDB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArduinoLibrary", "ArduinoLibrary\ArduinoLibrary.csproj", "{60E9E8D6-A8E4-4A2E-9078-9D14DB1F2A35}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArduinoLibrary", "ArduinoLibrary\ArduinoLibrary.csproj", "{60E9E8D6-A8E4-4A2E-9078-9D14DB1F2A35}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

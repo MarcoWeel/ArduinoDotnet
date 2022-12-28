@@ -9,26 +9,42 @@ namespace ArduinoLibrary
 {
     public class RequestReceiver
     {
-        //private ArduinoManager Manager;
-        //public RequestReceiver(ArduinoManager manager)
-        //{
-        //    Manager = manager;
-        //}
+        private ArduinoManager Manager;
+        public RequestReceiver(ArduinoManager manager)
+        {
+            Manager = manager;
+        }
 
-        
-        //public void ProcessRequest(string PinName, double State, int id)
-        //{
-        //    Manager.Arduinos.Where(r => r.Id == id).First().Pins.Where(r => r.PinName == PinName).First().SetState(State);
-        //}
 
-        //public void SignUpArduino(int id, string ip)
-        //{
-        //    Manager.AddArduino(new Arduino{Id = id, Ip = ip, Pins = new List<Pin>()});
-        //}
+        public void ProcessRequest(int PinNumber, double State, int id)
+        {
+            int arduinoIndex = Manager.Arduinos.FindIndex(r => r.Id == id);
+            if (arduinoIndex >= 0)
+            {
+                int pinIndex = Manager.Arduinos[arduinoIndex].Pins.FindIndex(r => r.pinNumber == PinNumber);
+                if (pinIndex >= 0)
+                {
+                    Manager.ChangeState(arduinoIndex, pinIndex, State);
+                }
+            }
+        }
 
-        //public void SignUpPin(Pin pin, int id)
-        //{
-        //    Manager.Arduinos.Where(r => r.Id == id).First().Pins.Add(pin);
-        //}
+        public void SignUpArduino(int id, string ip)
+        {
+            var arduino = Manager.Arduinos.Find(r => r.Id == id);
+            if (arduino is not null)
+            {
+                arduino.Ip = ip;
+            }
+        }
+
+        public void SignUpPin(Pin pin, int id)
+        {
+            int index = Manager.Arduinos.FindIndex(r => r.Id == id);
+            if (index >= 0)
+            {
+                Manager.Arduinos[index].Pins.Add(pin);
+            }
+        }
     }
 }
