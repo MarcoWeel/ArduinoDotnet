@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ArduinoLibrary;
+﻿using ArduinoLibrary;
+using System.Reflection;
 
 namespace ArduinoDotnet
 {
@@ -16,7 +12,6 @@ namespace ArduinoDotnet
         {
             _manager = manager;
         }
-
         //hier je methode met je logica
         public void StartCode()
         {
