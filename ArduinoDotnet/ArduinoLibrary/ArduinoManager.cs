@@ -50,6 +50,7 @@ namespace ArduinoLibrary
         {
             
             timer.StartTimerLoop(interval, action);
+            WebsocketController.StartListening();
         }
 
         //public void AddTask(Action action)

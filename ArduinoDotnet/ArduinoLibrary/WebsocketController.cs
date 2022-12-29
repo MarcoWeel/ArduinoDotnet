@@ -19,7 +19,7 @@ namespace ArduinoLibrary
             // Dns.GetHostName returns the name of the 
             // host running the application.
             IPHostEntry ipHostInfo = Dns.Resolve(Dns.GetHostName());
-            IPAddress ipAddress = ipHostInfo.AddressList[0];
+            IPAddress ipAddress = ipHostInfo.AddressList[4];
             IPEndPoint localEndPoint = new IPEndPoint(ipAddress, 10000);
 
             // Create a TCP/IP socket.
@@ -35,7 +35,9 @@ namespace ArduinoLibrary
                 {
                     Console.WriteLine("Waiting for a connection...");
                     // Program is suspended while waiting for an incoming connection.
+                    var temp = listener.Connected;
                     Socket handler = listener.Accept();
+                    var tem2p = listener.Connected;
                     Console.WriteLine("Client connected");
                     // An incoming connection needs to be processed.
                     while (true)
@@ -68,10 +70,5 @@ namespace ArduinoLibrary
 
         }
 
-        public static int Main(String[] args)
-        {
-            StartListening();
-            return 0;
-        }
     }
 }
