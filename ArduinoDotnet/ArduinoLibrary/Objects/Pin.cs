@@ -18,7 +18,8 @@ namespace ArduinoLibrary.Objects
         public enum Mode
         {
             Input,
-            Output
+            Output, 
+            None
         }
         public enum Type
         {

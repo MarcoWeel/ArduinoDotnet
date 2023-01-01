@@ -8,7 +8,7 @@ ArduinoManager manager = new ArduinoManager();
 
 manager.AddArduino(new Arduino
 {
-    Id = 1,
+    Id = "1",
     Pins = new List<Pin>
     {
         new Pin

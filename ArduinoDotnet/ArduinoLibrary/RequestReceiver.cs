@@ -16,7 +16,7 @@ namespace ArduinoLibrary
         }
 
 
-        public void ProcessRequest(int PinNumber, double State, int id)
+        public void ProcessRequest(int PinNumber, double State, string id)
         {
             int arduinoIndex = _manager.Arduinos.FindIndex(r => r.Id == id);
             if (arduinoIndex >= 0)
@@ -29,7 +29,7 @@ namespace ArduinoLibrary
             }
         }
 
-        public void SignUpArduino(int id, string ip)
+        public void SignUpArduino(string id, string ip)
         {
             var arduino = _manager.Arduinos.Find(r => r.Id == id);
             if (arduino is not null)
@@ -38,7 +38,7 @@ namespace ArduinoLibrary
             }
         }
 
-        public void SignUpPin(Pin pin, int id)
+        public void SignUpPin(Pin pin, string id)
         {
             int index = _manager.Arduinos.FindIndex(r => r.Id == id);
             if (index >= 0)
