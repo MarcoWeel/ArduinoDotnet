@@ -2,11 +2,11 @@
 using ArduinoLibrary;
 using ArduinoLibrary.Objects;
 
-ArduinoManager manager = new ArduinoManager();
+Orchestrator orchestrator = new Orchestrator();
 
 //creeër een arduino en voeg het bij de manager toe.
 
-manager.AddArduino(new Arduino
+orchestrator.AddArduino(new Arduino
 {
     Id = "1",
     Pins = new List<Pin>
@@ -14,13 +14,13 @@ manager.AddArduino(new Arduino
         new Pin
         {
             pinMode = Pin.Mode.Output,
-            pinType = Pin.Type.Digital,
+            pinType = Pin.Type.Analogue,
             pinNumber = 4
         },
         new Pin
         {
-            pinMode = Pin.Mode.Input,
-            pinType = Pin.Type.Analogue,
+            pinMode = Pin.Mode.Output,
+            pinType = Pin.Type.Digital,
             pinNumber = 2
         },
         new Pin
@@ -33,8 +33,7 @@ manager.AddArduino(new Arduino
 });
 
 
-Code code = new Code(manager);
+Code code = new Code(orchestrator);
 code.StartCode();
-
 
 Console.ReadKey();

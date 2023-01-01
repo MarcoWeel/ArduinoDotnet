@@ -1,61 +1,75 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using ArduinoLibrary.Objects;
 
 namespace ArduinoLibrary
 {
-    public class ArduinoManager
+    internal class ArduinoManager
     {
         private bool _stateChanged;
-        public List<Arduino> Arduinos = new List<Arduino>();
+        public Arduino arduino;
+        private WebsocketController _websocketController;
 
-        public bool AddArduino(Arduino arduino)
+        public ArduinoManager()
         {
-            int indexId = Arduinos.FindIndex(r => r.Id == arduino.Id);
-            int indexIp = Arduinos.FindIndex(r => r.Ip == arduino.Ip);
-            if (indexIp >= 0)
-            {
-                Arduinos.RemoveAt(indexIp);
-                Arduinos.Add(arduino);
-                _stateChanged = true;
-                return false;
-            }
-            else if (indexId >= 0)
-            {
-                Arduinos.RemoveAt(indexId);
-                Arduinos.Add(arduino);
-                _stateChanged = true;
-                return false;
-            }
-            else
-            {
-                Arduinos.Add(arduino);
-                _stateChanged = true;
-                return true;
-            }
+            _websocketController = new WebsocketController();
         }
 
-        public void ChangeState(int arduinoIndex, int pinIndex, double state)
+        public void AddArduino(Arduino arduino)
         {
-            Arduinos[arduinoIndex].Pins[pinIndex].pinValue = state;
+            //int indexId = this.arduino.FindIndex(r => r.Id == arduino.Id);
+            //if (indexId >= 0)
+            //{
+            //    this.arduino.RemoveAt(indexId);
+            //    this.arduino.Add(arduino);
+            //    _stateChanged = true;
+            //    return false;
+            //}
+            //else
+            //{
+            //    this.arduino.Add(arduino);
+            //    _stateChanged = true;
+            //    return true;
+            //}
+            this.arduino = arduino;
+        }
+
+        public void AddIpToArduino(string ip, string id)
+        {
+            arduino.Ip = ip;
+            _stateChanged = true;
+        }
+
+        public List<Pin> GetPinsFromArduino(string id)
+        {
+            return arduino.Pins;
+        }
+
+        public void ChangeState(int pinIndex, double state)
+        {
+            arduino.Pins[pinIndex].pinValue = state;
             _stateChanged = true;
         }
 
         TimerClass timer = new TimerClass();
 
-        public void StartLoop(int interval, Action action)
+        public Task StartLoop(int interval, Action action)
         {
-            
-            timer.StartTimerLoop(interval, action);
-            WebsocketController.StartListening();
+            var handler = _websocketController.StartArduinoConnection(this, timer);
+            //fixen hieronder
+            arduino.handler = handler;
+            timer.SetupTimerLoop(interval, action);
+            _websocketController.UseHandler(handler);
+            return Task.CompletedTask;
         }
 
-        //public void AddTask(Action action)
-        //{
-        //    timer.AddTask(action);
-        //}
+        public void SendMessage(string message)
+        {
+            _websocketController.SendMessage(arduino.handler, message);
+        }
     }
 }

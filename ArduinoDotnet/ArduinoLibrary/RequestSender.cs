@@ -3,7 +3,7 @@ using System.Net;
 
 namespace ArduinoLibrary
 {
-    public class RequestSender
+    internal class RequestSender
     {
         public bool SendPinStateRequest(string url, string pinName, int type, double state)
         {

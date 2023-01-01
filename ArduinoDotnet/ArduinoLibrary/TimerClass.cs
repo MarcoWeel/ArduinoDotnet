@@ -8,10 +8,16 @@ namespace ArduinoLibrary
     {
         private static Action _action;
         private static Timer _timer;
-        public void StartTimerLoop(int interval, Action action)
+        private static bool _isSetup = false;
+        public void SetupTimerLoop(int interval, Action action)
         {
             _action = action;
             SetTimer(interval);
+        }
+
+        public void StartLoop()
+        {
+            _isSetup = true;
         }
 
         private static void SetTimer(int interval)
@@ -22,6 +28,7 @@ namespace ArduinoLibrary
             _timer.Elapsed += OnTimedEvent;
             _timer.AutoReset = true;
             _timer.Enabled = true;
+
         }
 
         private static void OnTimedEvent(Object source, ElapsedEventArgs e)
@@ -29,7 +36,7 @@ namespace ArduinoLibrary
             Console.WriteLine("The Elapsed event was raised at {0:HH:mm:ss.fff}",
                 e.SignalTime);
             var task = new Task(_action);
-                task.Start();
+            task.Start();
         }
     }
 }
