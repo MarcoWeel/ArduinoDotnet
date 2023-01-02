@@ -10,16 +10,14 @@ bool GotPins = false;
 
 
 void SetupStateManager() {
-  if (client.connect(server, serverPort))
-    for (int i = 0; i < 5; i++) {
-      Serial.println("connected");
-      // transmit data
-      //signup arduino with own IP;
-      client.println("SetIP:" + WiFi.localIP().toString() + ";" + "¶" + "SetID:" + id + ";" + "¶");
-      delay(250);
-      GetPins();
-    }
-  else {
+  if (client.connect(server, serverPort)) {
+    Serial.println("connected");
+    // transmit data
+    //signup arduino with own IP;
+    client.println("SetID:" + (String)id + ";" + "SetIP:" + WiFi.localIP().toString() + ";" + "$");
+    delay(250);
+    GetPins();
+  } else {
     Serial.println("connection failed");
   }
 
@@ -48,48 +46,105 @@ void SetupStateManager() {
 // }
 
 void GetPins() {
-  client.println("GetPins:" + (String)id + ";" + "¶");
+  client.println("GetPins:" + (String)id + ";" + "$");
   String message = "";
   while (!GotPins)
     if (client.available()) {
       char c = client.read();
-      if (c != '¶') {
+      if (c != '$') {
         if (c != ';') {
-          message = +c;
-          Serial.print(c);
-        }
-        else{
+          message += c;
+          //Serial.print(c);
+        } else {
           TempStrings.add(message);
           message = "";
         }
       } else {
-        if (TempStrings.get(0) == "SendPinsTo:" + (String)id) {
-          TempStrings.remove(0);
-          for(int i=0; i < TempStrings.size(); i++){
-            int from = TempStrings.get(i).indexOf(':');
-            int to = TempStrings.get(i).length();
-            String subString = TempStrings.get(i).substring(from, to);
-            Serial.print(subString);
+        for (int i = 0; i < TempStrings.size(); i++) {
+          Serial.println(TempStrings.get(i));
+          int from = TempStrings.get(i).indexOf(':');
+          int to = TempStrings.get(i).length();
+          String subString = TempStrings.get(i).substring(from + 1, to);
+          if (subString[0] == 'A') {
+            pinTypes.add(0);
+          } else if (subString[0] == 'D') {
+            pinTypes.add(1);
+          } else if (subString[0] == 'V') {
+            pinTypes.add(2);
           }
-        } else
-          TempStrings.clear();
-        Serial.print("Wrong message received");
+          subString.remove(0, 1);
+
+          if (subString[subString.length() - 1] == 'I') {
+            subString.remove(subString.length() - 1);
+            pinMode(subString.toInt(), INPUT);
+          } else if (subString[subString.length() - 1] == 'O') {
+            subString.remove(subString.length() - 1);
+            pinMode(subString.toInt(), OUTPUT);
+          } else if (subString[subString.length() - 1] == 'N') {
+          }
+        }
+        GotPins = true;
+        Serial.println("Pins Setup");
       }
     }
+  TempStrings.clear();
 }
 
+String message = "";
 void CheckStates() {
-  if (client.available()) {
-    char c = client.read();
-    Serial.print(c);
-  }
-
   if (!client.connected()) {
     Serial.println();
     Serial.println("disconnecting.");
     client.stop();
     delay(100000);
   }
+  if (client.available()) {
+    char c = client.read();
+    if (c != '$') {
+      if (c != ';') {
+        message += c;
+      } else {
+        TempStrings.add(message);
+        message = "";
+      }
+    } else {
+      if (TempStrings.size() > 0) {
+        for (int i = 0; i < TempStrings.size(); i++) {
+          if(TempStrings.get(i).indexOf('|')){
+            int fromcmd = TempStrings.get(i).indexOf(':');
+            int fromsep = TempStrings.get(i).indexOf('|');
+            int to = TempStrings.get(i).length();
+            String subStringValue = TempStrings.get(i).substring(fromcmd + 1, fromsep);
+            String subStringValue2 = TempStrings.get(i).substring(fromsep + 1, to);
+            String subString = TempStrings.get(i).substring(0, fromcmd);
+            Serial.println(subString);
+            Serial.println(subStringValue);
+            Serial.println(subStringValue2);
+            if(subString == "SendPin"){
+              if(subStringValue2 == "1"){
+                digitalWrite(subStringValue.toInt(), HIGH);
+              }
+              else if (subStringValue2 == "0")   {
+                digitalWrite(subStringValue.toInt(), LOW);
+              }           
+            }
+          }
+          else{
+            int from = TempStrings.get(i).indexOf(':');
+            int to = TempStrings.get(i).length();
+            String subStringValue = TempStrings.get(i).substring(from + 1, to);
+            String subString = TempStrings.get(i).substring(0, from);
+            Serial.println(subString);
+            Serial.println(subStringValue);
+          }
+        }
+      }
+      TempStrings.clear();
+    }
+  }
+
+
+
   // HTTPClient PostClient;
 
   // for (int i = 0; i < activePins.size(); i++) {

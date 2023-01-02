@@ -20,7 +20,6 @@ namespace ArduinoLibrary
             var manager = new ArduinoManager();
             manager.AddArduino(arduino);
             _managers.Add(manager);
-            //Task.Run(mana)
         }
 
         public void StartLoopForArduinoWithId(string id, int interval, Action action)

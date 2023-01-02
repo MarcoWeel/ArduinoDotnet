@@ -55,12 +55,11 @@ namespace ArduinoLibrary
             _stateChanged = true;
         }
 
-        TimerClass timer = new TimerClass();
+        TimerClass timer = new();
 
         public Task StartLoop(int interval, Action action)
         {
             var handler = _websocketController.StartArduinoConnection(this, timer);
-            //fixen hieronder
             arduino.handler = handler;
             timer.SetupTimerLoop(interval, action);
             _websocketController.UseHandler(handler);

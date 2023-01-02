@@ -11,8 +11,8 @@
 
 const char* ssid     = STASSID;
 const char* password = STAPSK;
-const char* id = "2";
-byte server[] = { 192, 168, 2, 3 }; // Google
+const char* id = "1";
+byte server[] = { 192, 168, 2, 16 }; // Google
 int serverPort=10000;
 WiFiClient client;
 
