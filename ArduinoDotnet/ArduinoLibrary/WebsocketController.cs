@@ -17,16 +17,16 @@ namespace ArduinoLibrary
         private Socket _handler;
 
 
-        public Socket StartArduinoConnection(ArduinoManager manager, TimerClass timer)
+        public Socket StartArduinoConnection(ArduinoManager manager, TimerClass timer, string ip)
         {
             _manager = manager;
             _timer = timer;
-
+            
             // Establish the local endpoint for the socket.
             // Dns.GetHostName returns the name of the 
             // host running the application.
-            IPHostEntry ipHostInfo = Dns.Resolve(Dns.GetHostName());
-            IPAddress ipAddress = ipHostInfo.AddressList[4];
+            //IPHostEntry ipHostInfo = Dns.Resolve(Dns.GetHostName());
+            IPAddress ipAddress = IPAddress.Parse(ip);
             IPEndPoint localEndPoint = new IPEndPoint(ipAddress, 10000);
 
             // Create a TCP/IP socket.

@@ -2,7 +2,10 @@
 using ArduinoLibrary;
 using ArduinoLibrary.Objects;
 
-Orchestrator orchestrator = new Orchestrator();
+
+
+const string IpAdress = "192.168.2.24";
+Orchestrator orchestrator = new Orchestrator(IpAdress);
 
 //creeër een arduino en voeg het bij de manager toe.
 

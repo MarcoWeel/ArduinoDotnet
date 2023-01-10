@@ -57,9 +57,9 @@ namespace ArduinoLibrary
 
         TimerClass timer = new();
 
-        public Task StartLoop(int interval, Action action)
+        public Task StartLoop(int interval, Action action, string ip)
         {
-            var handler = _websocketController.StartArduinoConnection(this, timer);
+            var handler = _websocketController.StartArduinoConnection(this, timer, ip);
             arduino.handler = handler;
             timer.SetupTimerLoop(interval, action);
             _websocketController.UseHandler(handler);

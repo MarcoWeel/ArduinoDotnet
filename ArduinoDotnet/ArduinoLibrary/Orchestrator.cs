@@ -10,9 +10,11 @@ namespace ArduinoLibrary
     public class Orchestrator
     {
         private readonly List<ArduinoManager> _managers;
+        private readonly string _ipAdress;
 
-        public Orchestrator()
+        public Orchestrator(string ip)
         {
+            _ipAdress = ip;
             _managers = new List<ArduinoManager>();
         }
         public void AddArduino(Arduino arduino)
@@ -25,7 +27,7 @@ namespace ArduinoLibrary
         public void StartLoopForArduinoWithId(string id, int interval, Action action)
         {
             var arduinoManager = _managers.Find(r => r.arduino.Id == id);
-            arduinoManager.StartLoop(interval, action);
+            arduinoManager.StartLoop(interval, action, _ipAdress);
         }
 
         public void SendMessageForArduinoWithId(string id, string message)
