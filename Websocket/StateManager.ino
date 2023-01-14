@@ -91,11 +91,15 @@ void GetPins() {
 }
 
 String message = "";
+
+void(* resetFunc) (void) = 0; //declare reset function @ address 0
+ 
 void CheckStates() {
   if (!client.connected()) {
     Serial.println();
     Serial.println("disconnecting.");
     client.stop();
+    resetFunc();  //call reset
     delay(100000);
   }
   if (client.available()) {

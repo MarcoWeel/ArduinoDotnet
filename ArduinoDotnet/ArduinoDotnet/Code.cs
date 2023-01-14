@@ -35,7 +35,7 @@ namespace ArduinoDotnet
 
 
             //start een loop met logica voor een arduino met een id
-            _orchestrator.StartLoopForArduinoWithId("1", 2000, action);
+            _orchestrator.StartLoopForArduinoWithId("1", 500, action);
         }
 
     }
