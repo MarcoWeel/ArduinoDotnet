@@ -25,6 +25,12 @@ orchestrator.AddArduino(new Arduino
         {
             pinMode = Pin.Mode.Output,
             pinType = Pin.Type.Digital,
+            pinNumber = 8
+        },
+        new Pin
+        {
+            pinMode = Pin.Mode.Output,
+            pinType = Pin.Type.Digital,
             pinNumber = 2
         },
         new Pin

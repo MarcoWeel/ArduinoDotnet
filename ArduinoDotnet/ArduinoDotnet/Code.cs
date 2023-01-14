@@ -25,7 +25,7 @@ namespace ArduinoDotnet
                     test = false;
                 }
                 else
-                {
+                { //sendPin sends pin two with status HIGH
                     command = "SendPin:2|1;$";
                     test = true;
                 }
