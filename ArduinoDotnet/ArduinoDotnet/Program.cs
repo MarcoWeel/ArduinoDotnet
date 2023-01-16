@@ -1,12 +1,19 @@
-﻿using ArduinoDotnet;
+﻿using System.Net;
+using System.Net.Sockets;
+using ArduinoDotnet;
 using ArduinoLibrary;
 using ArduinoLibrary.Objects;
 
 
 
-const string IpAdress = "192.168.2.16";
-//const string IpAdress = "172.16.222.60";
-Orchestrator orchestrator = new Orchestrator(IpAdress);
+string localIP;
+using (Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, 0))
+{
+    socket.Connect("8.8.8.8", 65530);
+    IPEndPoint endPoint = socket.LocalEndPoint as IPEndPoint;
+    localIP = endPoint.Address.ToString();
+}
+Orchestrator orchestrator = new Orchestrator(localIP);
 
 //creeër een arduino en voeg het bij de manager toe.
 
