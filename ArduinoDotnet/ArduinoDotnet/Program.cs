@@ -12,6 +12,7 @@ using (Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, 
     socket.Connect("8.8.8.8", 65530);
     IPEndPoint endPoint = socket.LocalEndPoint as IPEndPoint;
     localIP = endPoint.Address.ToString();
+    Console.WriteLine(localIP);
 }
 Orchestrator orchestrator = new Orchestrator(localIP);
 
@@ -28,12 +29,12 @@ orchestrator.AddArduino(new Arduino
             pinType = Pin.Type.Analogue,
             pinNumber = 4
         },
-        new Pin
-        {
-            pinMode = Pin.Mode.Output,
-            pinType = Pin.Type.Digital,
-            pinNumber = 8
-        },
+        //new Pin
+        //{
+        //    pinMode = Pin.Mode.Output,
+        //    pinType = Pin.Type.Digital,
+        //    pinNumber = 8
+        //},
         new Pin
         {
             pinMode = Pin.Mode.Output,

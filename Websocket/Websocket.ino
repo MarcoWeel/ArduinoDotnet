@@ -4,15 +4,15 @@
 #include <LinkedList.h>
 
 #ifndef STASSID
-#define STASSID "Duckie"
-#define STAPSK  "roErmrj1"
+#define STASSID "ThuisgroepOW"
+#define STAPSK  "sukkel67919772!"
 #endif
 
 
 const char* ssid     = STASSID;
 const char* password = STAPSK;
 const char* id = "1";
-byte server[] = { 192, 168, 2, 16 }; // ip van server (C#)
+byte server[] = { 192, 168, 2, 29 }; // ip van server (C#)
 int serverPort=10000;
 WiFiClient client;
 
