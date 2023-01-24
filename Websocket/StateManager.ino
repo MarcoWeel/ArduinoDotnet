@@ -99,7 +99,7 @@ void CheckStates() {
     Serial.println();
     Serial.println("disconnecting.");
     client.stop();
-    resetFunc();  //call reset
+    //resetFunc();  //call reset
     delay(100000);
   }
   if (client.available()) {

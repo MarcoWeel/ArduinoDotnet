@@ -12,7 +12,7 @@
 const char* ssid     = STASSID;
 const char* password = STAPSK;
 const char* id = "1";
-byte server[] = { 192, 168, 2, 103 }; // ip van server (C#)
+byte server[] = { 192, 168, 2, 16 }; // ip van server (C#)
 int serverPort=10000;
 WiFiClient client;
 

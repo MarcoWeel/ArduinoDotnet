@@ -65,10 +65,11 @@ namespace ArduinoLibrary
             while (true)
                 if (handler.Available > 0)
                 {
-                    //Console.WriteLine("available " + handler.Available);
+                    Console.WriteLine("available " + handler.Available);
                     bytes = new byte[1024];
                     int bytesRec = handler.Receive(bytes, 0, handler.Available, SocketFlags.None);
                     string data = Encoding.UTF8.GetString(bytes, 0, bytesRec);
+                    Console.WriteLine(data);
                     data = data.Replace("$", "");
                     data = data.Replace("\r\n", "");
                     data = data.Trim();
