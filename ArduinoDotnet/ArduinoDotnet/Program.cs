@@ -4,7 +4,8 @@ using ArduinoDotnet;
 using ArduinoLibrary;
 using ArduinoLibrary.Objects;
 
-
+// linux arm maken met -> Build -> Publish selection 
+//C:\Users\ercmr\OneDrive\Documenten\GitHub\ArduinoDotnet\ArduinoDotnet\ArduinoDotnet\bin\Release\net6.0\publish\linux-arm\
 
 string localIP;
 using (Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, 0))

@@ -27,7 +27,8 @@ namespace ArduinoLibrary
             // host running the application.
             //IPHostEntry ipHostInfo = Dns.Resolve(Dns.GetHostName());
             IPAddress ipAddress = IPAddress.Parse(ip);
-            IPEndPoint localEndPoint = new IPEndPoint(ipAddress, 10000);
+            IPEndPoint localEndPoint = new IPEndPoint(ipAddress, 10000);          //poort nummer
+            //IPEndPoint localEndPoint = new IPEndPoint(ipAddress, 8000);
 
             // Create a TCP/IP socket.
             Socket listener = new Socket(AddressFamily.InterNetwork,
@@ -124,7 +125,7 @@ namespace ArduinoLibrary
 
         public void SendMessage(Socket handler, string message)
         {
-            handler.Send(Encoding.UTF8.GetBytes(message), 0, Encoding.UTF8.GetByteCount(message), SocketFlags.None);
+             handler.Send(Encoding.UTF8.GetBytes(message), 0, Encoding.UTF8.GetByteCount(message), SocketFlags.None);
         }
 
     }

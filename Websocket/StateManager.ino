@@ -1,3 +1,5 @@
+
+
 LinkedList<int> activePins = LinkedList<int>();
 LinkedList<int> pinTypes = LinkedList<int>();
 LinkedList<int> pinModes = LinkedList<int>();
@@ -15,6 +17,7 @@ void SetupStateManager() {
     // transmit data
     //signup arduino with own IP;
     client.println("SetID:" + (String)id + ";" + "SetIP:" + WiFi.localIP().toString() + ";" + "$");
+    Serial.println("SetID:" + (String)id + ";" + "SetIP:" + WiFi.localIP().toString() + ";" + "$");
     delay(250);
     GetPins();
   } else {
@@ -46,20 +49,26 @@ void SetupStateManager() {
 // }
 
 void GetPins() {
+  Serial.println(" get pins" );                      //-------------------------------------
   client.println("GetPins:" + (String)id + ";" + "$");
   String message = "";
   while (!GotPins)
     if (client.available()) {
       char c = client.read();
       if (c != '$') {
+        Serial.print("!=$");Serial.println(c);                       //-------------------------------------
         if (c != ';') {
+          Serial.print("!=;");Serial.println(c);                     //-------------------------------------
           message += c;
           //Serial.print(c);
         } else {
+          Serial.println(" else ;" );              //-------------------------------------
+          Serial.print("add");Serial.println(message);
           TempStrings.add(message);
           message = "";
         }
       } else {
+        Serial.println("else $");                 //------------------------------------- 
         for (int i = 0; i < TempStrings.size(); i++) {
           Serial.println(TempStrings.get(i));
           int from = TempStrings.get(i).indexOf(':');
@@ -84,7 +93,7 @@ void GetPins() {
           }
         }
         GotPins = true;
-        Serial.println("Pins Setup");
+        Serial.println("Pins Setup");                //-------------------------------------
       }
     }
   TempStrings.clear();
@@ -95,11 +104,13 @@ String message = "";
 void(* resetFunc) (void) = 0; //declare reset function @ address 0
  
 void CheckStates() {
+  //Serial.println(" checkStates " );                    //-------------------------------------
+  //Hier komt ie elke keer als bij ArduinoDotNet
   if (!client.connected()) {
     Serial.println();
     Serial.println("disconnecting.");
     client.stop();
-    //resetFunc();  //call reset
+    resetFunc();  //call reset
     delay(100000);
   }
   if (client.available()) {
